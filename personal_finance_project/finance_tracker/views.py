@@ -24,3 +24,14 @@ class TransactionListView(ListView):
         context['expense_total'] = self.get_queryset().filter(type='expense').aggregate(models.Sum('amount'))['amount__sum'] or 0
         return context
 
+@method_decorator(login_required, name='dispatch')
+class TransactionCreateView(CreateView):
+    model = Transaction
+    form_class = TransactionForm
+    template_name = 'transactions/transaction_form.html'
+    success_url = reverse_lazy('transaction-list')
+
+    def form_valid(self, form):
+        # Automatically associate the transaction with the logged-in user
+        form.instance.user = self.request.user
+        return super().form_valid(form)
