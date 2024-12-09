@@ -7,10 +7,11 @@ from .models import Transaction, Budget
 from .forms import TransactionForm, BudgetForm
 from personal_finance_project.finance_tracker import models
 
+# View all transactions
 @method_decorator(login_required, name='dispatch')
 class TransactionListView(ListView):
     model = Transaction
-    template_name = 'transactions/transaction_list.html'
+    template_name = 'finance_tracker/transaction_list.html'
     context_object_name = 'transactions'
 
     def get_queryset(self):
@@ -24,11 +25,12 @@ class TransactionListView(ListView):
         context['expense_total'] = self.get_queryset().filter(type='expense').aggregate(models.Sum('amount'))['amount__sum'] or 0
         return context
 
+# Create a new transaction
 @method_decorator(login_required, name='dispatch')
 class TransactionCreateView(CreateView):
     model = Transaction
     form_class = TransactionForm
-    template_name = 'transactions/transaction_form.html'
+    template_name = 'finance_tracker/transaction_form.html'
     success_url = reverse_lazy('transaction-list')
 
     def form_valid(self, form):
@@ -36,13 +38,25 @@ class TransactionCreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+# Edit a transaction
 @method_decorator(login_required, name='dispatch')
 class TransactionUpdateView(UpdateView):
     model = Transaction
     form_class = TransactionForm
-    template_name = 'transactions/transaction_form.html'
+    template_name = 'finance_tracker/transaction_form.html'
     success_url = reverse_lazy('transaction-list')
 
     def get_queryset(self):
         # Ensure users can only update their own transactions
+        return Transaction.objects.filter(user=self.request.user)
+
+# Delete a transaction
+@method_decorator(login_required, name='dispatch')
+class TransactionDeleteView(DeleteView):
+    model = Transaction
+    template_name = 'transactions/transaction_confirm_delete.html'
+    success_url = reverse_lazy('transaction-list')
+
+    def get_queryset(self):
+        # Ensure users can only delete their own transactions
         return Transaction.objects.filter(user=self.request.user)
