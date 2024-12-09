@@ -54,9 +54,21 @@ class TransactionUpdateView(UpdateView):
 @method_decorator(login_required, name='dispatch')
 class TransactionDeleteView(DeleteView):
     model = Transaction
-    template_name = 'transactions/transaction_confirm_delete.html'
+    template_name = 'finance_tracker/transaction_confirm_delete.html'
     success_url = reverse_lazy('transaction-list')
 
     def get_queryset(self):
         # Ensure users can only delete their own transactions
         return Transaction.objects.filter(user=self.request.user)
+
+
+# List user budgets
+@method_decorator(login_required, name='dispatch')
+class BudgetListView(ListView):
+    model = Budget
+    template_name = 'budgets/budget_list.html'
+    context_object_name = 'budgets'
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
+
