@@ -72,3 +72,16 @@ class BudgetListView(ListView):
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
 
+# Create a budget
+@method_decorator(login_required, name='dispatch')
+class BudgetCreateView(CreateView):
+    model = Budget
+    form_class = BudgetForm
+    template_name = 'budgets/budget_form.html'
+    success_url = reverse_lazy('budget-list')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
+
