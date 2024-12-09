@@ -94,3 +94,13 @@ class BudgetUpdateView(UpdateView):
 
     def get_queryset(self):
         return Budget.objects.filter(user=self.request.user)
+
+# Delete a budget
+@method_decorator(login_required, name='dispatch')
+class BudgetDeleteView(DeleteView):
+    model = Budget
+    template_name = 'budgets/budget_confirm_delete.html'
+    success_url = reverse_lazy('budget-list')
+
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
