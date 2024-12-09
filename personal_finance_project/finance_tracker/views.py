@@ -35,3 +35,14 @@ class TransactionCreateView(CreateView):
         # Automatically associate the transaction with the logged-in user
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+@method_decorator(login_required, name='dispatch')
+class TransactionUpdateView(UpdateView):
+    model = Transaction
+    form_class = TransactionForm
+    template_name = 'transactions/transaction_form.html'
+    success_url = reverse_lazy('transaction-list')
+
+    def get_queryset(self):
+        # Ensure users can only update their own transactions
+        return Transaction.objects.filter(user=self.request.user)
