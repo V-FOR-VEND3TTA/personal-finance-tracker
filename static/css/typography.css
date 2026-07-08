@@ -1,0 +1,43 @@
+body{
+
+    font-family:'Inter',sans-serif;
+
+    font-size:16px;
+
+    color:var(--gray-700);
+
+    background:var(--body-bg);
+
+    line-height:1.7;
+
+}
+
+h1,h2,h3,h4,h5,h6{
+
+    font-family:'Poppins',sans-serif;
+
+    color:var(--gray-900);
+
+    font-weight:700;
+
+}
+
+.display-1{
+
+    font-size:4rem;
+
+}
+
+.display-2{
+
+    font-size:3rem;
+
+}
+
+.money{
+
+    font-family:'JetBrains Mono',monospace;
+
+    font-weight:700;
+
+}
