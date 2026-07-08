@@ -1,0 +1,37 @@
+@media(max-width:992px){
+
+.hero{
+
+text-align:center;
+
+}
+
+.hero h1{
+
+font-size:3rem;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.hero{
+
+padding:100px 0;
+
+}
+
+.hero h1{
+
+font-size:2.3rem;
+
+}
+
+.section{
+
+padding:70px 0;
+
+}
+
+}
