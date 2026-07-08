@@ -1,0 +1,49 @@
+.btn-primary{
+
+    background:var(--primary);
+
+    border:none;
+
+    border-radius:999px;
+
+    padding:14px 34px;
+
+    transition:var(--transition);
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-3px);
+
+}
+
+.btn-outline-light{
+
+    border-radius:999px;
+
+    padding:14px 34px;
+
+}
+
+.card{
+
+    border:none;
+
+    border-radius:20px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow-lg);
+
+}
